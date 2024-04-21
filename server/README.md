@@ -8,4 +8,5 @@ change the package.json
 "dev": "nodemon server.js"
 
 step: 3
-npm install express mysql cors nodemon
+npm install express mysql2 cors nodemon
+

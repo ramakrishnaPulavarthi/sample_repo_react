@@ -1,15 +1,25 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 function Home() {
   const [data, setData] = useState([]);
+
   useEffect(()=>{
-    axios.get('/student')
+    axios.get('/studentList')
     .then((res)=>{
       setData(res.data)
     })
     .catch((err)=>console.log(err))
-  },[])
+  },[]);
+
+  function deleteStudent(id){
+    axios.delete(`/delete_student/${id}`)
+    .then(()=>{
+      setData(data.filter(student => student.id !== id));
+    })
+    .catch((err)=>console.log(err))
+  }
+  
   return (
     <div className='container-fluid'>
       <h3>Students</h3>
@@ -27,7 +37,7 @@ function Home() {
         <tbody>
           {
             data.map((student)=>{
-              return (<tr>
+              return (<tr key={student.id}>
                 <td>{student.id}</td>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
@@ -36,7 +46,7 @@ function Home() {
                 <td>
                   <Link to={`/read/${student.id}`}>Read</Link>
                   <Link to={`/edit/${student.id}`}>EDit</Link>
-                  <button>Delete</button>
+                  <button onClick={() => deleteStudent(student.id)}>Delete</button>
                 </td>
               </tr>)
             })

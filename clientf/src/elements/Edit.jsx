@@ -25,7 +25,7 @@ function Edit() {
 
   function handleSubmit(e){
     e.preventDefault()
-    axios.post(`/edit_user/${id}`, data)
+    axios.post(`/edit_student/${id}`, data)
     .then((res)=>{
       navigate('/')
       console.log(res);
